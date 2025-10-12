@@ -1,0 +1,5 @@
+{
+  "name": "BugScout - Bug Bounty Dork Generator",
+  "description": "A cyberpunk-themed web application that generates a comprehensive list of Google Dorks for bug bounty hunting, categorized by vulnerability type. Enter a domain to quickly find potential security misconfigurations and sensitive information.",
+  "requestFramePermissions": []
+}
