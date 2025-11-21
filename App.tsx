@@ -5,8 +5,7 @@ import BugBountyGenerator from './components/BugBountyGenerator';
 import About from './components/About';
 import Toast from './components/Toast';
 import MatrixBackground from './components/MatrixBackground';
-
-export type Page = 'generator' | 'about';
+import { Page } from './types';
 
 const App: React.FC = () => {
     const [activePage, setActivePage] = useState<Page>('generator');

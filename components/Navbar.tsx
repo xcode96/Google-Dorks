@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Page } from '../App';
+import { Page } from '../types';
 
 interface NavbarProps {
     activePage: Page;

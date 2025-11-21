@@ -5,3 +5,5 @@ export interface DorkCategory {
   className: string;
   dorks: string[];
 }
+
+export type Page = 'generator' | 'about';
