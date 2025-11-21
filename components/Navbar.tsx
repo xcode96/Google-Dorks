@@ -7,45 +7,49 @@ interface NavbarProps {
     setActivePage: (page: Page) => void;
 }
 
-const NavLink: React.FC<{ page: Page; activePage: Page; setActivePage: (page: Page) => void; children: React.ReactNode }> = ({ page, activePage, setActivePage, children }) => {
-    const isActive = activePage === page;
-    const activeClasses = 'text-neon-cyan font-semibold after:w-full';
-    const inactiveClasses = 'text-gray-200';
-
-    return (
-        <a
-            href="#"
-            onClick={(e) => {
-                e.preventDefault();
-                setActivePage(page);
-            }}
-            className={`font-share-tech-mono hover:text-neon-cyan px-3 py-2 relative transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-px after:bg-neon-cyan after:-translate-x-1/2 after:transition-all after:duration-300 hover:after:w-full ${isActive ? activeClasses : inactiveClasses}`}
-        >
-            {children}
-        </a>
-    );
-};
-
 const Navbar: React.FC<NavbarProps> = ({ activePage, setActivePage }) => {
     return (
-        <nav className="navbar bg-nav-bg p-4 md:px-8 flex flex-col md:flex-row justify-between items-center border-b border-neon-cyan/10 relative overflow-hidden z-50">
-            <div className="logo-container flex flex-col items-center md:items-start">
-                <div className="logo font-orbitron text-3xl md:text-4xl font-bold text-neon-cyan relative" style={{ textShadow: '0 0 10px rgba(0, 255, 255, 0.5)' }}>
-                    BugScout
+        <header className="sticky top-0 z-50 px-4 pt-4 pb-2">
+            <div className="max-w-7xl mx-auto glass-panel rounded-2xl px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+                
+                <div className="flex items-center gap-3 mb-4 md:mb-0">
+                    <div className="w-8 h-8 rounded bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                        <i className="fas fa-radar text-white text-sm"></i>
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="font-display font-bold text-xl tracking-wide text-white leading-none">
+                            BUGSCOUT
+                        </span>
+                        <span className="text-[10px] font-mono text-cyan-400 tracking-widest uppercase opacity-80">
+                            Reconnaissance Unit
+                        </span>
+                    </div>
                 </div>
-                <div className="tagline font-share-tech-mono text-sm text-gray-500 -mt-1">
-                    Bug Bounty Dork Generator
-                </div>
+
+                <nav className="flex items-center gap-1 bg-slate-900/50 rounded-full p-1 border border-white/5">
+                    <button
+                        onClick={() => setActivePage('generator')}
+                        className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                            activePage === 'generator'
+                                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/25'
+                                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        }`}
+                    >
+                        Dashboard
+                    </button>
+                    <button
+                        onClick={() => setActivePage('about')}
+                        className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                            activePage === 'about'
+                                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/25'
+                                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        }`}
+                    >
+                        Protocol
+                    </button>
+                </nav>
             </div>
-            <div className="nav-links flex gap-4 md:gap-6 mt-3 md:mt-0">
-                <NavLink page="generator" activePage={activePage} setActivePage={setActivePage}>
-                    Generator
-                </NavLink>
-                <NavLink page="about" activePage={activePage} setActivePage={setActivePage}>
-                    About
-                </NavLink>
-            </div>
-        </nav>
+        </header>
     );
 };
 

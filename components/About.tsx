@@ -3,27 +3,49 @@ import React from 'react';
 
 const About: React.FC = () => {
     return (
-        <div className="fade-in-animation dork-card-main bg-card-bg rounded-lg p-6 md:p-8 shadow-2xl relative overflow-hidden border border-neon-cyan/10">
-            <h2 className="section-title text-center text-neon-cyan font-orbitron text-2xl md:text-3xl mb-8 relative inline-block w-full z-10" style={{ textShadow: '0 0 10px rgba(0, 255, 255, 0.3)', letterSpacing: '2px' }}>
-                ABOUT BUGSCOUT
-                <span className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-24 h-0.5 bg-gradient-to-r from-transparent via-neon-cyan to-transparent"></span>
-            </h2>
-            <div className="space-y-6 text-gray-300 font-rajdhani text-lg leading-relaxed">
-                <p>
-                    <span className="text-neon-cyan font-semibold">BugScout</span> is a reconnaissance tool designed for bug bounty hunters, penetration testers, and security researchers. It automates the generation of targeted Google Dorks to rapidly uncover potential vulnerabilities, misconfigurations, and sensitive data exposure on a given domain.
-                </p>
-                <p>
-                    In the fast-paced world of cybersecurity, efficiency is key. Manually crafting search queries is time-consuming. BugScout streamlines this process, providing a comprehensive, categorized list of dorks that can reveal everything from open admin panels and sensitive files to cloud storage misconfigurations and potential injection points.
-                </p>
-                <div className="border-t border-neon-cyan/20 my-6"></div>
-                <h3 className="font-orbitron text-xl text-neon-green">How It Works</h3>
-                <p>
-                    Simply enter a target domain (e.g., <code className="bg-black/50 text-neon-yellow px-2 py-1 rounded">example.com</code>). BugScout will then inject this domain into a vast, curated library of dork templates. The results are presented in a clean, organized interface, allowing you to quickly launch these searches on Google and begin your analysis.
-                </p>
-                <p className="text-sm text-gray-500 font-share-tech-mono">
-                    <i className="fas fa-exclamation-triangle text-neon-orange mr-2"></i>
-                    Disclaimer: This tool is intended for educational and authorized security testing purposes only. Unauthorized scanning of systems is illegal. Always respect the scope of bug bounty programs and obtain proper authorization before testing.
-                </p>
+        <div className="max-w-4xl mx-auto animate-fade-in-up">
+            <div className="glass-panel rounded-xl p-8 md:p-12 relative overflow-hidden">
+                {/* Decorator */}
+                <div className="absolute top-0 right-0 p-10 opacity-10 pointer-events-none">
+                    <i className="fas fa-fingerprint text-9xl text-white"></i>
+                </div>
+
+                <h2 className="font-display font-bold text-3xl text-white mb-8 flex items-center gap-4">
+                    <span className="w-1 h-8 bg-cyan-500 block rounded-full"></span>
+                    SYSTEM ARCHITECTURE
+                </h2>
+
+                <div className="space-y-8 text-slate-300 font-light leading-relaxed">
+                    <div>
+                        <p className="mb-4">
+                            <strong className="text-cyan-400 font-medium">BugScout</strong> operates as a specialized reconnaissance interface for security researchers. It creates an abstraction layer over standard Google search operators (Dorks), automating the generation of complex query strings tailored for vulnerability discovery.
+                        </p>
+                        <p>
+                            By programmatically injecting target domains into curated query patterns, the system reduces the "Time-to-Discovery" for critical exposure vectors including configuration leaks, administrative entry points, and exposed file systems.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                        <div className="bg-slate-900/50 border border-slate-700/50 p-6 rounded-lg">
+                            <h3 className="font-display font-bold text-lg text-white mb-3 flex items-center gap-2">
+                                <i className="fas fa-code-branch text-cyan-500 text-sm"></i>
+                                Workflow
+                            </h3>
+                            <p className="text-sm text-slate-400">
+                                Input target vector (domain) -> System parses input -> Maps against vulnerability database -> Renders executable queries.
+                            </p>
+                        </div>
+                        <div className="bg-slate-900/50 border border-slate-700/50 p-6 rounded-lg">
+                            <h3 className="font-display font-bold text-lg text-white mb-3 flex items-center gap-2">
+                                <i className="fas fa-shield-alt text-cyan-500 text-sm"></i>
+                                Compliance
+                            </h3>
+                            <p className="text-sm text-slate-400">
+                                Tool intended for defensive security analysis and authorized Bug Bounty programs only. Unauthorized enumeration constitutes a violation of the CFAA.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

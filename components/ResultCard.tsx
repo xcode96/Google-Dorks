@@ -5,66 +5,82 @@ import { DorkCategory } from '../types';
 interface ResultCardProps {
     category: DorkCategory;
     domain: string;
+    showToast: (msg: string) => void;
+    index: number;
 }
 
-const DorkLink: React.FC<{ query: string; categoryClassName: string }> = ({ query, categoryClassName }) => {
-    const [isHovered, setIsHovered] = useState(false);
-    const categoryColorVar = `var(--category-color, var(--neon-cyan))`;
-    const categoryShadowVar = `rgba(var(--category-shadow, 0,255,255), 0.3)`;
-    
+const DorkRow: React.FC<{ query: string; showToast: (msg: string) => void }> = ({ query, showToast }) => {
     const link = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
 
-    const baseStyle = {
-        borderColor: categoryShadowVar,
-        backgroundColor: 'rgba(0,0,0,0.4)',
-        color: 'var(--text-color)'
-    };
-    
-    const hoverStyle = {
-        borderColor: categoryColorVar,
-        backgroundColor: `rgba(var(--category-shadow, 0,255,255), 0.1)`,
-        color: categoryColorVar
+    const handleCopy = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        navigator.clipboard.writeText(query).then(() => {
+            showToast('Query Copied to Clipboard');
+        });
     };
 
     return (
-        <a
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="dork-link block text-gray-300 p-2.5 bg-black/40 rounded text-xs font-mono border-l-2 transition-all duration-300 hover:pl-3.5 break-all"
-            style={isHovered ? hoverStyle : baseStyle}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
-            {query}
-        </a>
+        <div className="group flex items-center gap-2 p-2 rounded hover:bg-slate-800/80 transition-colors border border-transparent hover:border-slate-700/50">
+            <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-grow font-mono text-[11px] md:text-xs text-cyan-200/80 hover:text-cyan-400 truncate transition-colors"
+                title="Open in Google"
+            >
+                {query}
+            </a>
+            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                 <button 
+                    onClick={handleCopy}
+                    className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-700 rounded transition-colors"
+                    title="Copy Dork"
+                >
+                    <i className="fas fa-copy text-xs"></i>
+                </button>
+                <a 
+                    href={link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 text-slate-400 hover:text-cyan-400 hover:bg-slate-700 rounded transition-colors"
+                    title="Execute Search"
+                >
+                    <i className="fas fa-external-link-alt text-xs"></i>
+                </a>
+            </div>
+        </div>
     );
 };
 
 
-const ResultCard: React.FC<ResultCardProps> = ({ category, domain }) => {
-    const categoryColor = `var(--category-color, var(--neon-cyan))`;
-    const categoryShadow = `0 0 5px rgba(var(--category-shadow, 0,255,255), 0.5)`;
+const ResultCard: React.FC<ResultCardProps> = ({ category, domain, showToast, index }) => {
+    // Delay animation based on index for a cascading effect
+    const style = { animationDelay: `${index * 0.05}s` };
 
     return (
-        <div className={`category-container ${category.className} bg-darker-bg/70 backdrop-blur-sm rounded-md p-4 shadow-lg border border-neon-cyan/10 relative transition-all duration-300 hover:shadow-neon-cyan/20 hover:-translate-y-1`}>
-            <div className="category-indicator"></div>
-            <div
-                className="dork-count absolute top-3 right-3 text-xs bg-black/50 px-2 py-0.5 rounded-full font-share-tech-mono border border-current"
-                style={{ color: categoryColor }}
-            >
-                {`${category.dorks.length} dorks`}
-            </div>
-            <h4 className="category-title font-rajdhani text-lg mb-3 font-medium flex items-center gap-3 relative pl-4" style={{ color: categoryColor, textShadow: categoryShadow }}>
-                <div className="category-badge-animated w-8 h-8 rounded-full flex items-center justify-center relative">
-                    <i className={`${category.icon} text-base`} style={{ color: categoryColor }}></i>
+        <div 
+            className="glass-panel glass-panel-hover rounded-xl p-5 flex flex-col h-full animate-fade-in-up"
+            style={style}
+        >
+            <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/5">
+                <div className="flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-slate-800 border border-slate-700 text-cyan-500`}>
+                        <i className={`${category.icon} text-sm`}></i>
+                    </div>
+                    <h4 className="font-display font-semibold text-lg text-slate-200 tracking-wide">
+                        {category.name}
+                    </h4>
                 </div>
-                <span>{category.name}</span>
-            </h4>
-            <div className="dork-links-custom-scrollbar dork-links flex flex-col gap-2 max-h-52 overflow-y-auto pr-1">
-                {category.dorks.map((dork, index) => {
+                <span className="text-[10px] font-mono font-bold text-slate-500 bg-slate-900 px-2 py-1 rounded">
+                    {category.dorks.length} OPS
+                </span>
+            </div>
+            
+            <div className="flex-grow overflow-y-auto custom-scrollbar max-h-[240px] -mr-2 pr-2 space-y-1">
+                {category.dorks.map((dork, idx) => {
                     const query = dork.replace(/{domain}/g, domain);
-                    return <DorkLink key={index} query={query} categoryClassName={category.className} />;
+                    return <DorkRow key={idx} query={query} showToast={showToast} />;
                 })}
             </div>
         </div>
