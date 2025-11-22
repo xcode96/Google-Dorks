@@ -32,7 +32,7 @@ const About: React.FC = () => {
                                 Workflow
                             </h3>
                             <p className="text-sm text-slate-400">
-                                Input target vector (domain) -> System parses input -> Maps against vulnerability database -> Renders executable queries.
+                                Input target vector (domain) &rarr; System parses input &rarr; Maps against vulnerability database &rarr; Renders executable queries.
                             </p>
                         </div>
                         <div className="bg-slate-900/50 border border-slate-700/50 p-6 rounded-lg">
