@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface ToastProps {
@@ -10,17 +9,16 @@ const Toast: React.FC<ToastProps> = ({ message, isVisible }) => {
     return (
         <div
             className={`
-                fixed bottom-8 right-8 
-                bg-black border-l-4 border-brand-yellow text-brand-yellow 
-                px-6 py-4 shadow-2xl z-[1000] 
-                transition-all duration-200 transform
-                font-tech uppercase tracking-wider
-                flex items-center gap-4
-                ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'}
+                fixed bottom-8 right-8 z-50
+                bg-white text-black
+                px-4 py-3 rounded-lg shadow-xl
+                transition-all duration-300 transform
+                flex items-center gap-3
+                ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0 pointer-events-none'}
             `}
         >
-            <i className="fas fa-terminal text-sm animate-pulse"></i>
-            <span>{message}</span>
+            <i className="fas fa-check-circle text-green-600"></i>
+            <span className="text-sm font-medium">{message}</span>
         </div>
     );
 };
