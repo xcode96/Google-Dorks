@@ -17,7 +17,7 @@ const About: React.FC = () => {
                 <div className="space-y-8 text-gray-400 font-mono text-sm leading-relaxed">
                     <div>
                         <p className="mb-4">
-                            <span className="text-brand-yellow font-bold">>> SYSTEM OVERVIEW:</span> BugScout operates as a specialized reconnaissance interface for security researchers. It abstracts standard Google search operators (Dorks), automating the generation of complex query strings.
+                            <span className="text-brand-yellow font-bold">&gt;&gt; SYSTEM OVERVIEW:</span> BugScout operates as a specialized reconnaissance interface for security researchers. It abstracts standard Google search operators (Dorks), automating the generation of complex query strings.
                         </p>
                         <p>
                              By programmatically injecting target domains into curated query patterns, the system reduces the "Time-to-Discovery" for critical exposure vectors including configuration leaks, administrative entry points, and exposed file systems.
