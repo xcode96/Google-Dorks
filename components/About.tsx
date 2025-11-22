@@ -3,18 +3,18 @@ import React from 'react';
 
 const About: React.FC = () => {
     return (
-        <div className="max-w-4xl mx-auto animate-slide-in pt-8">
-            <div className="relative bg-brand-panel border border-brand-border p-8 md:p-12 clip-corner-br">
+        <div className="max-w-4xl mx-auto animate-slide-in pt-4 md:pt-8">
+            <div className="relative bg-brand-panel border border-brand-border p-6 md:p-12 clip-corner-br">
                 
                 {/* Decorative Header */}
-                <div className="flex items-center gap-2 mb-8 border-b border-brand-border pb-4">
+                <div className="flex items-center gap-2 mb-6 md:mb-8 border-b border-brand-border pb-4">
                     <div className="w-4 h-4 bg-brand-yellow"></div>
-                    <h2 className="font-sans font-bold text-3xl text-white uppercase tracking-tighter">
+                    <h2 className="font-sans font-bold text-2xl md:text-3xl text-white uppercase tracking-tighter">
                         Protocol Information
                     </h2>
                 </div>
 
-                <div className="space-y-8 text-gray-400 font-mono text-sm leading-relaxed">
+                <div className="space-y-6 md:space-y-8 text-gray-400 font-mono text-sm leading-relaxed">
                     <div>
                         <p className="mb-4">
                             <span className="text-brand-yellow font-bold">&gt;&gt; SYSTEM OVERVIEW:</span> BugScout operates as a specialized reconnaissance interface for security researchers. It abstracts standard Google search operators (Dorks), automating the generation of complex query strings.
