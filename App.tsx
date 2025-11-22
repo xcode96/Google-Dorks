@@ -29,17 +29,22 @@ const App: React.FC = () => {
     }, []);
 
     return (
-        <div className="min-h-screen w-full relative flex flex-col">
-            <MatrixBackground /> {/* Acts as the Grid Background now */}
-            <Navbar activePage={activePage} setActivePage={setActivePage} />
-            <main className="flex-grow container max-w-7xl mx-auto px-4 py-8 relative z-10">
-                {activePage === 'generator' && <BugBountyGenerator showToast={showToast} />}
-                {activePage === 'about' && <About />}
-            </main>
+        <div className="min-h-screen w-full relative flex flex-col bg-brand-dark text-gray-300">
+            <MatrixBackground />
             
-            <footer className="relative z-10 py-6 text-center text-slate-600 text-xs font-mono">
-                BUGSCOUT SYSTEM v2.0 // SECURE CONNECTION ESTABLISHED
-            </footer>
+            <div className="relative z-10 flex flex-col min-h-screen border-l border-r border-brand-border max-w-[1400px] mx-auto bg-brand-dark/80 shadow-[0_0_100px_rgba(0,0,0,0.8)]">
+                <Navbar activePage={activePage} setActivePage={setActivePage} />
+                
+                <main className="flex-grow w-full p-4 md:p-8">
+                    {activePage === 'generator' && <BugBountyGenerator showToast={showToast} />}
+                    {activePage === 'about' && <About />}
+                </main>
+                
+                <footer className="border-t border-brand-border bg-brand-panel/50 p-4 flex justify-between items-center text-[10px] font-tech uppercase tracking-widest text-gray-500">
+                    <span>System Status: Operational</span>
+                    <span>v2.4.0 // BLK-OPS</span>
+                </footer>
+            </div>
             
             <Toast message={toast.message} isVisible={toast.isVisible} />
         </div>

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { DorkCategory } from '../types';
 
 interface ResultCardProps {
@@ -16,26 +16,25 @@ const DorkRow: React.FC<{ query: string; showToast: (msg: string) => void }> = (
         e.preventDefault();
         e.stopPropagation();
         navigator.clipboard.writeText(query).then(() => {
-            showToast('Query Copied to Clipboard');
+            showToast('QUERY_COPIED_TO_CLIPBOARD');
         });
     };
 
     return (
-        <div className="group flex items-center gap-2 p-2 rounded hover:bg-slate-800/80 transition-colors border border-transparent hover:border-slate-700/50">
+        <div className="group flex items-stretch mb-1 hover:bg-brand-yellow/5 transition-colors">
             <a
                 href={link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-grow font-mono text-[11px] md:text-xs text-cyan-200/80 hover:text-cyan-400 truncate transition-colors"
-                title="Open in Google"
+                className="flex-grow py-2 px-3 font-mono text-[10px] md:text-xs text-gray-400 group-hover:text-brand-yellow truncate transition-colors border-l-2 border-transparent group-hover:border-brand-yellow"
             >
                 {query}
             </a>
-            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="flex items-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity px-1">
                  <button 
                     onClick={handleCopy}
-                    className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-700 rounded transition-colors"
-                    title="Copy Dork"
+                    className="w-8 h-full flex items-center justify-center text-gray-500 hover:text-white transition-colors"
+                    title="COPY"
                 >
                     <i className="fas fa-copy text-xs"></i>
                 </button>
@@ -43,8 +42,8 @@ const DorkRow: React.FC<{ query: string; showToast: (msg: string) => void }> = (
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-1.5 text-slate-400 hover:text-cyan-400 hover:bg-slate-700 rounded transition-colors"
-                    title="Execute Search"
+                    className="w-8 h-full flex items-center justify-center text-gray-500 hover:text-brand-yellow transition-colors"
+                    title="OPEN"
                 >
                     <i className="fas fa-external-link-alt text-xs"></i>
                 </a>
@@ -53,36 +52,42 @@ const DorkRow: React.FC<{ query: string; showToast: (msg: string) => void }> = (
     );
 };
 
-
 const ResultCard: React.FC<ResultCardProps> = ({ category, domain, showToast, index }) => {
-    // Delay animation based on index for a cascading effect
     const style = { animationDelay: `${index * 0.05}s` };
 
     return (
         <div 
-            className="glass-panel glass-panel-hover rounded-xl p-5 flex flex-col h-full animate-fade-in-up"
+            className="relative bg-brand-panel clip-corner-br animate-slide-in group"
             style={style}
         >
-            <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/5">
+            {/* Decorative Border Line Top */}
+            <div className="absolute top-0 left-0 w-full h-[2px] bg-brand-border group-hover:bg-brand-yellow transition-colors duration-300"></div>
+
+            {/* Header */}
+            <div className="p-4 bg-[#1a1a1d] flex items-center justify-between border-b border-brand-border">
                 <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-slate-800 border border-slate-700 text-cyan-500`}>
-                        <i className={`${category.icon} text-sm`}></i>
-                    </div>
-                    <h4 className="font-display font-semibold text-lg text-slate-200 tracking-wide">
+                    <i className={`${category.icon} text-brand-yellow text-sm`}></i>
+                    <h4 className="font-tech font-bold text-lg text-gray-200 uppercase tracking-tight">
                         {category.name}
                     </h4>
                 </div>
-                <span className="text-[10px] font-mono font-bold text-slate-500 bg-slate-900 px-2 py-1 rounded">
-                    {category.dorks.length} OPS
+                <span className="text-[9px] font-mono text-gray-600 bg-black px-1 border border-gray-800">
+                    ID:0{index + 1}
                 </span>
             </div>
             
-            <div className="flex-grow overflow-y-auto custom-scrollbar max-h-[240px] -mr-2 pr-2 space-y-1">
-                {category.dorks.map((dork, idx) => {
-                    const query = dork.replace(/{domain}/g, domain);
-                    return <DorkRow key={idx} query={query} showToast={showToast} />;
-                })}
+            {/* Content Area */}
+            <div className="p-2 min-h-[200px] bg-gradient-to-b from-brand-panel to-black">
+                <div className="overflow-y-auto custom-scrollbar max-h-[240px]">
+                    {category.dorks.map((dork, idx) => {
+                        const query = dork.replace(/{domain}/g, domain);
+                        return <DorkRow key={idx} query={query} showToast={showToast} />;
+                    })}
+                </div>
             </div>
+
+            {/* Corner Detail */}
+            <div className="absolute bottom-1 right-1 w-3 h-3 border-b border-r border-brand-yellow/30"></div>
         </div>
     );
 };

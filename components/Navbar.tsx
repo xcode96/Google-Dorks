@@ -9,46 +9,56 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ activePage, setActivePage }) => {
     return (
-        <header className="sticky top-0 z-50 px-4 pt-4 pb-2">
-            <div className="max-w-7xl mx-auto glass-panel rounded-2xl px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+        <header className="sticky top-0 z-50 bg-brand-dark/95 backdrop-blur-sm border-b border-brand-yellow/20">
+            <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center">
                 
-                <div className="flex items-center gap-3 mb-4 md:mb-0">
-                    <div className="w-8 h-8 rounded bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-                        <i className="fas fa-radar text-white text-sm"></i>
-                    </div>
+                {/* Logo Section */}
+                <div className="flex items-center px-6 py-4 border-b md:border-b-0 md:border-r border-brand-border bg-brand-panel/30">
+                    <i className="fas fa-bug text-brand-yellow text-xl mr-3"></i>
                     <div className="flex flex-col">
-                        <span className="font-display font-bold text-xl tracking-wide text-white leading-none">
-                            BUGSCOUT
+                        <span className="font-tech text-2xl leading-none tracking-tighter text-white">
+                            BUG<span className="text-brand-yellow">SCOUT</span>
                         </span>
-                        <span className="text-[10px] font-mono text-cyan-400 tracking-widest uppercase opacity-80">
-                            Reconnaissance Unit
+                        <span className="text-[9px] tracking-[0.3em] text-gray-500 font-bold uppercase">
+                            Recon Interface
                         </span>
                     </div>
                 </div>
 
-                <nav className="flex items-center gap-1 bg-slate-900/50 rounded-full p-1 border border-white/5">
+                {/* Navigation */}
+                <nav className="flex-grow flex items-center justify-end px-4 py-2 gap-2">
                     <button
                         onClick={() => setActivePage('generator')}
-                        className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                            activePage === 'generator'
-                                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/25'
-                                : 'text-slate-400 hover:text-white hover:bg-white/5'
-                        }`}
+                        className={`
+                            relative px-6 py-2 font-tech text-sm uppercase tracking-wider transition-all
+                            clip-corner-br border-l-2
+                            ${activePage === 'generator' 
+                                ? 'bg-brand-yellow/10 text-brand-yellow border-brand-yellow' 
+                                : 'text-gray-500 border-transparent hover:text-gray-300 hover:bg-white/5'}
+                        `}
                     >
                         Dashboard
+                        {activePage === 'generator' && <span className="absolute top-0 right-0 w-2 h-2 bg-brand-yellow"></span>}
                     </button>
+                    
                     <button
                         onClick={() => setActivePage('about')}
-                        className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                            activePage === 'about'
-                                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/25'
-                                : 'text-slate-400 hover:text-white hover:bg-white/5'
-                        }`}
+                        className={`
+                            relative px-6 py-2 font-tech text-sm uppercase tracking-wider transition-all
+                            clip-corner-br border-l-2
+                            ${activePage === 'about' 
+                                ? 'bg-brand-yellow/10 text-brand-yellow border-brand-yellow' 
+                                : 'text-gray-500 border-transparent hover:text-gray-300 hover:bg-white/5'}
+                        `}
                     >
-                        Protocol
+                        System Info
+                        {activePage === 'about' && <span className="absolute top-0 right-0 w-2 h-2 bg-brand-yellow"></span>}
                     </button>
                 </nav>
             </div>
+            
+            {/* Decorator Line */}
+            <div className="h-[2px] w-full bg-gradient-to-r from-brand-yellow via-transparent to-transparent opacity-50"></div>
         </header>
     );
 };

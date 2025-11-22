@@ -21,7 +21,7 @@ const BugBountyGenerator: React.FC<BugBountyGeneratorProps> = ({ showToast }) =>
 
     const handleGenerate = useCallback(() => {
         if (!isValidDomain(domain)) {
-            showToast('ERR: Invalid Domain Syntax');
+            showToast('ERROR: INVALID_DOMAIN_SYNTAX');
             return;
         }
 
@@ -32,16 +32,14 @@ const BugBountyGenerator: React.FC<BugBountyGeneratorProps> = ({ showToast }) =>
         setIsLoading(true);
         setTargetDomain(cleanDomain);
 
-        // Simulated scanning delay
         setTimeout(() => {
             setIsLoading(false);
             setShowResults(true);
-        }, 1000);
+        }, 800);
     }, [domain, showToast]);
 
-    // Extract unique category names for the filter tab
     const filters = useMemo(() => {
-        return ['All', ...bugBountyCategories.map(c => c.name.split(' ')[0])]; // Simplified filter names
+        return ['All', ...bugBountyCategories.map(c => c.name.split(' ')[0])];
     }, []);
 
     const filteredCategories = useMemo(() => {
@@ -52,78 +50,83 @@ const BugBountyGenerator: React.FC<BugBountyGeneratorProps> = ({ showToast }) =>
     return (
         <div className="w-full flex flex-col gap-8">
             
-            {/* Command Console Section */}
-            <section className="glass-panel rounded-xl p-8 md:p-12 relative overflow-hidden group animate-fade-in-up">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-30"></div>
-                
-                <div className="relative z-10 flex flex-col items-center text-center">
-                    <h2 className="font-display font-bold text-3xl md:text-4xl mb-2 text-white tracking-tight">
-                        TARGET <span className="text-cyan-400">ACQUISITION</span>
-                    </h2>
-                    <p className="text-slate-400 mb-8 max-w-lg mx-auto text-sm">
-                        Enter target domain to initialize detailed reconnaissance parameters and generate Google Hacking Database queries.
-                    </p>
+            {/* Console Input Section */}
+            <section className="relative bg-brand-panel border border-brand-border p-1 clip-corner-tl-br">
+                <div className="absolute top-0 left-0 bg-brand-yellow/20 w-full h-[1px]"></div>
+                <div className="absolute bottom-0 right-0 bg-brand-yellow/20 w-full h-[1px]"></div>
 
-                    <div className="w-full max-w-2xl relative flex items-center">
-                        <div className="absolute left-6 text-cyan-500">
-                            <i className="fas fa-terminal"></i>
-                        </div>
-                        <input 
-                            type="text" 
-                            value={domain}
-                            onChange={(e) => setDomain(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && handleGenerate()}
-                            className="w-full bg-slate-900/80 border border-slate-700 rounded-lg py-5 pl-14 pr-36 text-white font-mono text-lg focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all placeholder-slate-600 shadow-inner"
-                            placeholder="target.com"
-                            autoComplete="off"
-                            spellCheck="false"
-                        />
-                        <div className="absolute right-2">
+                <div className="bg-[#0a0a0c] p-8 md:p-12 flex flex-col items-center text-center clip-corner-tl-br border border-white/5">
+                    
+                    <div className="mb-6 flex flex-col items-center">
+                         <div className="text-brand-yellow text-xs font-tech tracking-[0.4em] mb-2 uppercase">
+                            // Target Designation System
+                         </div>
+                         <h2 className="text-4xl md:text-5xl font-bold text-white uppercase tracking-tight font-sans">
+                            Initialize <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-yellow to-white">Scan</span>
+                         </h2>
+                    </div>
+
+                    <div className="w-full max-w-3xl relative group">
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-yellow/50 to-gray-600/50 opacity-30 blur transition duration-200 group-hover:opacity-50"></div>
+                        <div className="relative flex items-stretch bg-black border border-brand-border">
+                            <div className="bg-brand-panel px-4 flex items-center border-r border-brand-border text-gray-500 font-mono select-none">
+                                root@scout:~#
+                            </div>
+                            <input 
+                                type="text" 
+                                value={domain}
+                                onChange={(e) => setDomain(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleGenerate()}
+                                className="flex-grow bg-transparent py-4 px-4 text-brand-yellow font-mono text-lg focus:outline-none placeholder-gray-800 uppercase"
+                                placeholder="ENTER DOMAIN"
+                                autoComplete="off"
+                                spellCheck="false"
+                            />
                             <button 
                                 onClick={handleGenerate}
                                 disabled={isLoading}
-                                className="bg-cyan-600 hover:bg-cyan-500 text-white font-semibold px-6 py-2.5 rounded-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-sm"
+                                className="bg-brand-yellow hover:bg-yellow-400 text-black font-bold px-8 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-tech uppercase tracking-wider flex items-center gap-2"
                             >
-                                {isLoading ? (
-                                    <i className="fas fa-circle-notch fa-spin"></i>
-                                ) : (
-                                    <>
-                                        <span>SCAN</span>
-                                        <i className="fas fa-arrow-right"></i>
-                                    </>
-                                )}
+                                {isLoading ? <i className="fas fa-cog fa-spin"></i> : 'EXECUTE'}
                             </button>
                         </div>
+                    </div>
+                    
+                    <div className="mt-4 text-[10px] text-gray-600 font-mono flex gap-4">
+                        <span>STATUS: {isLoading ? <span className="text-brand-yellow animate-pulse">PROCESSING</span> : <span className="text-green-500">IDLE</span>}</span>
+                        <span>MODULES: LOADED</span>
+                        <span>ENCRYPTION: ACTIVE</span>
                     </div>
                 </div>
             </section>
 
-            {/* Results Section */}
+            {/* Results Grid */}
             {showResults && (
-                <section className="animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                <section className="animate-slide-in">
                     
-                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
-                        <div className="flex items-center gap-3">
-                            <div className="w-2 h-8 bg-cyan-500 rounded-full"></div>
-                            <h3 className="text-2xl font-display font-bold text-white">
-                                INTEL <span className="text-slate-500">RESULTS</span>
+                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 border-b border-brand-border pb-4">
+                        <div className="flex items-baseline gap-4">
+                            <h3 className="text-2xl font-bold text-white font-sans uppercase">
+                                Scan Results
                             </h3>
-                            <span className="bg-slate-800 text-cyan-400 text-xs px-2 py-1 rounded border border-slate-700 font-mono">
-                                {targetDomain}
+                            <span className="font-mono text-brand-yellow text-sm">
+                                [{targetDomain}]
                             </span>
                         </div>
 
-                        {/* Filter Tabs */}
-                        <div className="flex overflow-x-auto pb-2 md:pb-0 gap-2 scrollbar-hide">
+                        {/* Industrial Filters */}
+                        <div className="flex flex-wrap gap-1 mt-4 md:mt-0">
                             {filters.map(filter => (
                                 <button
                                     key={filter}
                                     onClick={() => setActiveFilter(filter)}
-                                    className={`px-4 py-1.5 rounded text-xs font-medium uppercase tracking-wider transition-colors whitespace-nowrap ${
-                                        activeFilter === filter
-                                            ? 'bg-white text-slate-900'
-                                            : 'bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-700'
-                                    }`}
+                                    className={`
+                                        px-3 py-1 text-[10px] font-bold uppercase tracking-widest font-tech border
+                                        transition-all duration-200
+                                        ${activeFilter === filter
+                                            ? 'bg-brand-yellow text-black border-brand-yellow'
+                                            : 'bg-transparent text-gray-500 border-brand-border hover:border-gray-500 hover:text-gray-300'}
+                                    `}
                                 >
                                     {filter}
                                 </button>
